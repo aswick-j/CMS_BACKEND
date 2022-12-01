@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import logger from "../utils/Logger.js";
 
-var url = "mongodb://localhost:27017/pinkie";
+var url = "mongodb://0.0.0.0:27017/cms";
 
 export const connectDB = async () => {
   try {
@@ -8,9 +9,9 @@ export const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("Mongodb connected");
+    logger.info("Mongodb connected");
   } catch (err) {
-    console.log("Something went wrong",err);
+    logger.info("Something went wrong",err);
     process.exit(1);
   }
-};
+};     
