@@ -1,22 +1,35 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
 
-import { connectDB } from './src/db-init/dbconn.js';
-import logger from './src/utils/Logger.js';
+import { connectDB } from "./src/db-init/dbconn.js";
+import logger from "./src/utils/Logger.js";
 
-const app =express()
+import mongoose from "mongoose";
 
-app.use(bodyParser.json())
+import userRoutes from "./src/routes/userRoutes.js"
 
-app.use(cors())
+const app = express();
 
-connectDB()
+app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 8000
+app.use(cors());
 
-app.listen(PORT,()=>logger.info(`Server is listening on Port ${PORT}`))
+connectDB();
 
-app.all("*",(req,res)=>{res.send("Route not found")})
+const PORT = process.env.PORT || 8000;
 
+mongoose.connection.once("open", () => {
+    logger.info('MongoDB Connected Successfully')
+  app.listen(PORT, () => logger.info(`Server is listening on Port ${PORT}`));
+});
 
+mongoose.connection.on("error", (err) => {
+  logger.info('DB Connection Failed')
+});
+
+app.all("*", (req, res) => {
+  res.send("Route not found");
+});
+
+app.use('/api/users',userRoutes)
