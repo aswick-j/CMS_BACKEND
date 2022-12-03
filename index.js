@@ -28,8 +28,8 @@ mongoose.connection.on("error", (err) => {
   logger.info('DB Connection Failed')
 });
 
-app.all("*", (req, res) => {
-  res.send("Route not found");
-});
+// app.all("*", (req, res) => {
+//   res.send("Route not found");
+// });
 
 app.use('/api/users',userRoutes)
