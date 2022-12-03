@@ -4,7 +4,7 @@ import Inc from "mongoose-sequence";
 
 const AutoIncrement = Inc(mongoose); 
 
-const noteSchema = new mongoose.Schema(
+const taskSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -30,12 +30,12 @@ const noteSchema = new mongoose.Schema(
   }
 );
 
-noteSchema.plugin(AutoIncrement,{
+taskSchema.plugin(AutoIncrement,{
     inc_field:'ticket',
     id:'ticketNums',
     start_seq:500
 })
 
-const Note = mongoose.model("Note", noteSchema);
+const Task = mongoose.model("Task", taskSchema);
 
-export default Note
+export default Task
